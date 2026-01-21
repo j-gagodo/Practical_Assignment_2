@@ -2,13 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>CSC 413 - Practical Quiz 2</title>
+    <title>CSC 413 - Solar System Day & Night</title>
     <script src="script/aframe.min.js"></script>
     <script>
       AFRAME.registerComponent('orbit-controls', {
         schema: { speed: {type: 'number', default: 1} },
         tick: function (time, timeDelta) {
-          // Continuous rotation around the Y-axis
           this.el.object3D.rotation.y += (this.data.speed * (timeDelta / 1000));
         }
       });
@@ -17,7 +16,7 @@
   <body>
     <a-scene fog="type: exponential; color: #000; density: 0.001">
       
-      <!--Assets-->
+      <!--Textures-->
       <a-assets>
         <img id="sunTex" src="texture/2k_sun.jpg">
         <img id="mercuryTex" src="texture/2k_mercury.jpg">
@@ -34,18 +33,19 @@
         <img id="starsTex" src="texture/2k_stars.jpg">
       </a-assets>
       
-      <!--Stars-->
+      <!--Sky-->
       <a-sky src="#starsTex" radius="1000" rotation="0 -90 0"></a-sky>
 
-      <a-light type="ambient" color="#FFF" intensity="0.8"></a-light>
-      <a-light type="point" intensity="2.5" position="0 0 0" distance="150"></a-light>
+      <a-light type="ambient" color="#BBB" intensity="0.15"></a-light>
+      
+      <a-light type="point" intensity="2.5" position="0 0 0" distance="150" decay="1"></a-light>
 
       <!--Sun-->
       <a-sphere id="sun" position="0 0 0" radius="5" 
                 material="src: #sunTex; shader: flat">
       </a-sphere>
 
-      <!--Orbits-->
+      <!--Planet Orbits-->
       <a-ring color="#FFF" rotation="90 0 0" radius-inner="8.2" radius-outer="8.3" material="shader: flat; opacity: 0.05; side: double"></a-ring>
       <a-ring color="#FFF" rotation="90 0 0" radius-inner="11.4" radius-outer="11.5" material="shader: flat; opacity: 0.05; side: double"></a-ring>
       <a-ring color="#FFF" rotation="90 0 0" radius-inner="15" radius-outer="15.1" material="shader: flat; opacity: 0.05; side: double"></a-ring>
@@ -57,55 +57,53 @@
 
       <!--Mercury-->
       <a-entity orbit-controls="speed: 0.8">
-        <a-sphere src="#mercuryTex" position="8.25 0 -2" radius="0.4"></a-sphere>
+        <a-sphere src="#mercuryTex" position="8.25 0 -2" radius="0.4" material="roughness: 1"></a-sphere>
       </a-entity>
 
       <!--Venus-->
       <a-entity orbit-controls="speed: 0.6">
-        <a-sphere src="#venusTex" position="11.45 0 3" radius="0.9"></a-sphere>
-        <a-entity>
-          <a-sphere src="#venusAtmosphereTex" position="0 0 0" radius="1.1"></a-sphere>
-        </a-entity>
+        <a-sphere src="#venusTex" position="11.45 0 3" radius="0.9" material="roughness: 1"></a-sphere>
+        <a-sphere src="#venusAtmosphereTex" position="11.45 0 3" radius="0.95" material="opacity: 0.3; transparent: true"></a-sphere>
       </a-entity>
 
-      <!--Earth-->
+      <!--Earth & Moon-->
       <a-entity orbit-controls="speed: 0.4">
-        <a-sphere src="#earthTex" position="15.05 0 0" radius="1">
+        <a-sphere src="#earthTex" position="15.05 0 0" radius="1" material="roughness: 1">
            <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 3500; easing: linear">
-             <a-sphere src="#moonTex" position="1.6 0.2 0" radius="0.2"></a-sphere>
+             <a-sphere src="#moonTex" position="1.6 0.2 0" radius="0.2" material="roughness: 1"></a-sphere>
            </a-entity>
         </a-sphere>
       </a-entity>
 
       <!--Mars-->
       <a-entity orbit-controls="speed: 0.2">
-        <a-sphere src="#marsTex" position="18.45 0 4" radius="0.6"></a-sphere>
+        <a-sphere src="#marsTex" position="18.45 0 4" radius="0.6" material="roughness: 1"></a-sphere>
       </a-entity>
 
       <!--Jupiter-->
       <a-entity orbit-controls="speed: 0.1">
-        <a-sphere src="#jupiterTex" position="26.48 0 -5" radius="2.5"></a-sphere>
+        <a-sphere src="#jupiterTex" position="26.48 0 -5" radius="2.5" material="roughness: 1"></a-sphere>
       </a-entity>
 
       <!--Saturn-->
       <a-entity orbit-controls="speed: 0.08">
         <a-entity position="34.53 0 6">
-          <a-sphere src="#saturnTex" radius="2"></a-sphere>
-          <a-ring src="#saturnRingTex" rotation="90 0 0" radius-inner="2.4" radius-outer="3.2" material="shader: flat; side: double; transparent: true"></a-ring>
+          <a-sphere src="#saturnTex" radius="2" material="roughness: 1"></a-sphere>
+          <a-ring src="#saturnRingTex" rotation="90 0 0" radius-inner="2.4" radius-outer="3.2" material="side: double; transparent: true"></a-ring>
         </a-entity>
       </a-entity>
 
       <!--Uranus-->
       <a-entity orbit-controls="speed: 0.06">
-        <a-sphere src="#uranusTex" position="41.11 0 -3" radius="1.3"></a-sphere>
+        <a-sphere src="#uranusTex" position="41.11 0 -3" radius="1.3" material="roughness: 1"></a-sphere>
       </a-entity>
 
       <!--Neptune-->
       <a-entity orbit-controls="speed: 0.04">
-        <a-sphere src="#neptuneTex" position="48.04 0 2" radius="1.3"></a-sphere>
+        <a-sphere src="#neptuneTex" position="48.04 0 2" radius="1.3" material="roughness: 1"></a-sphere>
       </a-entity>
 
-      <!--Camera positioning-->
+      <!--Camera-->
       <a-entity position="0 50 90" rotation="-35 0 0">
         <a-camera wasd-controls="acceleration: 300" camera="far: 2000; near: 0.1"></a-camera>
       </a-entity>

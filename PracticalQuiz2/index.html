@@ -14,7 +14,7 @@
     </script>
   </head>
   <body>
-    <a-scene fog="type: exponential; color: #000; density: 0.001">
+    <a-scene background="color: black">
       
       <!--Textures-->
       <a-assets>
@@ -31,10 +31,12 @@
         <img id="uranusTex" src="texture/2k_uranus.jpg">
         <img id="neptuneTex" src="texture/2k_neptune.jpg">
         <img id="starsTex" src="texture/2k_stars.jpg">
+        <img id="milkyWayTex" src="texture/2k_stars_milky_way.jpg">
       </a-assets>
       
       <!--Sky-->
-      <a-sky src="#starsTex" radius="1000" rotation="0 -90 0"></a-sky>
+      <a-sky src="#starsTex"></a-sky>
+      <a-sky src="#milkyWayTex"></a-sky>
 
       <a-light type="ambient" color="#BBB" intensity="0.15"></a-light>
       
